@@ -48,7 +48,7 @@ export default function HomeScreen() {
       await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(fileContent))
       Alert.alert('Sucesso', 'Dados salvos com sucesso!')
     } catch (error) {
-      console.error('Erro ao salvar dados:', error)
+      console.error('Erro ao salvar dados', error)
       Alert.alert('Erro', 'Não foi possível salvar os dados.')
     }
   }

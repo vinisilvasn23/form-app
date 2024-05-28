@@ -40,7 +40,6 @@ export default function TabTwoScreen() {
     const files = await FileSystem.readDirectoryAsync(
       FileSystem.documentDirectory!
     )
-    console.log('Files in document directory:', files)
   }
 
   useEffect(() => {
@@ -69,17 +68,14 @@ export default function TabTwoScreen() {
     const csvFilePath = FileSystem.documentDirectory + 'formData.csv'
     await FileSystem.writeAsStringAsync(csvFilePath, csvContent)
 
-    console.log('CSV file generated successfully at:', csvFilePath)
-
     await shareCSV(csvFilePath)
   }
 
   const shareCSV = async (fileUri: string) => {
     try {
       await Sharing.shareAsync(fileUri, { mimeType: 'text/csv' })
-      console.log('CSV shared successfully')
     } catch (error) {
-      console.error('Error sharing CSV:', error)
+      console.error('Error non deu non:', error)
     }
   }
 
