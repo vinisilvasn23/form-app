@@ -52,98 +52,116 @@ export default function HomeScreen() {
       Alert.alert('Erro', 'Não foi possível salvar os dados.')
     }
   }
-
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ dark: '#ffff', light: '#fff7ff' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require('@/assets/images/icon2.png')}
           style={styles.reactLogo}
         />
       }
     >
-      <Formik
-        initialValues={{ name: '', company: '', email: '', phone: '' }}
-        validationSchema={FormSchema}
-        onSubmit={(values, actions) => {
-          saveData(values)
-          actions.resetForm()
-        }}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          values,
-          errors,
-          touched,
-        }) => (
-          <View style={styles.container}>
-            <Text style={styles.label}>Nome Completo</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
-            />
-            {touched.name && errors.name && (
-              <Text style={styles.error}>{errors.name}</Text>
+      <View style={{ backgroundColor: '#fff7ff' }}>
+        <View style={styles.container_text}>
+          <Text style={styles.title}>Insira os dados para contato</Text>
+        </View>
+        <View style={styles.container}>
+          <Formik
+            initialValues={{ name: '', company: '', email: '', phone: '' }}
+            validationSchema={FormSchema}
+            onSubmit={(values, actions) => {
+              saveData(values)
+              actions.resetForm()
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              setFieldValue,
+              values,
+              errors,
+              touched,
+            }) => (
+              <>
+                <Text style={styles.label}>Nome Completo</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
+                />
+                {touched.name && errors.name && (
+                  <Text style={styles.error}>{errors.name}</Text>
+                )}
+  
+                <Text style={styles.label}>Empresa</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={handleChange('company')}
+                  onBlur={handleBlur('company')}
+                  value={values.company}
+                />
+                {touched.company && errors.company && (
+                  <Text style={styles.error}>{errors.company}</Text>
+                )}
+  
+                <Text style={styles.label}>Email</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType='email-address'
+                />
+                {touched.email && errors.email && (
+                  <Text style={styles.error}>{errors.email}</Text>
+                )}
+  
+                <Text style={styles.label}>Telefone</Text>
+                <TextInputMask
+                  type={'cel-phone'}
+                  style={styles.input}
+                  value={values.phone}
+                  onChangeText={(text) => setFieldValue('phone', text)}
+                />
+                {touched.phone && errors.phone && (
+                  <Text style={styles.error}>{errors.phone}</Text>
+                )}
+  
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleSubmit()}
+                >
+                  <Text style={styles.btnText}>Salvar</Text>
+                </TouchableOpacity>
+              </>
             )}
-
-            <Text style={styles.label}>Empresa</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('company')}
-              onBlur={handleBlur('company')}
-              value={values.company}
-            />
-            {touched.company && errors.company && (
-              <Text style={styles.error}>{errors.company}</Text>
-            )}
-
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              keyboardType='email-address'
-            />
-            {touched.email && errors.email && (
-              <Text style={styles.error}>{errors.email}</Text>
-            )}
-
-            <Text style={styles.label}>Telefone</Text>
-            <TextInputMask
-              type={'cel-phone'}
-              style={styles.input}
-              value={values.phone}
-              onChangeText={(text) => setFieldValue('phone', text)}
-            />
-            {touched.phone && errors.phone && (
-              <Text style={styles.error}>{errors.phone}</Text>
-            )}
-
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => handleSubmit()}
-            >
-              <Text style={styles.btnText}>Salvar</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
+          </Formik>
+        </View>
+      </View>
     </ParallaxScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   reactLogo: {
-    width: 'auto',
-    height: 100,
+    marginTop: 20,
+    width: '100%',
+    height:'80%',
     resizeMode: 'contain',
+  },
+  container_text: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "700", 
+    color: '#363636',
   },
   container: {
     flex: 1,
@@ -157,6 +175,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     borderRadius: 12,
     fontSize: 24,
+    marginTop: 16,
+    color: '#363636',
   },
   error: {
     color: 'red',
@@ -166,7 +186,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 12,
     alignItems: 'center',
-    marginVertical: 8,
+    marginTop: 32,
   },
   btnText: {
     color: 'white',
@@ -174,6 +194,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   label: {
+    color: '#363636',
     fontSize: 24,
+    fontWeight: '900',
   },
 })
