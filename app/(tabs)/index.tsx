@@ -99,6 +99,7 @@ export default function HomeScreen() {
                   }}
                   onFocus={() => setFocusedInput('name')}
                   value={values.name}
+                  placeholder='Digite seu nome completo'
                 />
                 {touched.name && errors.name && (
                   <Text style={styles.error}>{errors.name}</Text>
@@ -117,6 +118,7 @@ export default function HomeScreen() {
                   }}
                   onFocus={() => setFocusedInput('company')}
                   value={values.company}
+                  placeholder='Digite o nome da sua empresa'
                 />
                 {touched.company && errors.company && (
                   <Text style={styles.error}>{errors.company}</Text>
@@ -136,6 +138,7 @@ export default function HomeScreen() {
                   onFocus={() => setFocusedInput('email')}
                   value={values.email}
                   keyboardType='email-address'
+                  placeholder='Digite seu email'
                 />
                 {touched.email && errors.email && (
                   <Text style={styles.error}>{errors.email}</Text>
@@ -152,6 +155,7 @@ export default function HomeScreen() {
                   onChangeText={(text) => setFieldValue('phone', text)}
                   onBlur={() => setFocusedInput(null)}
                   onFocus={() => setFocusedInput('phone')}
+                  placeholder='Digite seu telefone'
                 />
                 {touched.phone && errors.phone && (
                   <Text style={styles.error}>{errors.phone}</Text>
