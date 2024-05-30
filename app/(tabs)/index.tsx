@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Alert,
   Button,
@@ -32,6 +32,7 @@ const FormSchema = Yup.object().shape({
 
 export default function HomeScreen() {
   const navigation = useNavigation()
+  const [focusedInput, setFocusedInput] = useState<string | null>(null)
 
   const saveData = async (values: Values) => {
     try {
@@ -67,7 +68,7 @@ export default function HomeScreen() {
           <Text style={styles.title}>Insira os dados para contato</Text>
         </View>
         <View style={styles.container}>
-          <Formik
+        <Formik
             initialValues={{ name: '', company: '', email: '', phone: '' }}
             validationSchema={FormSchema}
             onSubmit={(values, actions) => {
@@ -87,9 +88,16 @@ export default function HomeScreen() {
               <>
                 <Text style={styles.label}>Nome Completo</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedInput === 'name' && styles.focusedInput
+                  ]}
                   onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
+                  onBlur={() => {
+                    handleBlur('name')
+                    setFocusedInput(null)
+                  }}
+                  onFocus={() => setFocusedInput('name')}
                   value={values.name}
                 />
                 {touched.name && errors.name && (
@@ -98,9 +106,16 @@ export default function HomeScreen() {
   
                 <Text style={styles.label}>Empresa</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedInput === 'company' && styles.focusedInput
+                  ]}
                   onChangeText={handleChange('company')}
-                  onBlur={handleBlur('company')}
+                  onBlur={() => {
+                    handleBlur('company')
+                    setFocusedInput(null)
+                  }}
+                  onFocus={() => setFocusedInput('company')}
                   value={values.company}
                 />
                 {touched.company && errors.company && (
@@ -109,9 +124,16 @@ export default function HomeScreen() {
   
                 <Text style={styles.label}>Email</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedInput === 'email' && styles.focusedInput
+                  ]}
                   onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
+                  onBlur={() => {
+                    handleBlur('email')
+                    setFocusedInput(null)
+                  }}
+                  onFocus={() => setFocusedInput('email')}
                   value={values.email}
                   keyboardType='email-address'
                 />
@@ -122,9 +144,14 @@ export default function HomeScreen() {
                 <Text style={styles.label}>Telefone</Text>
                 <TextInputMask
                   type={'cel-phone'}
-                  style={styles.input}
+                  style={[
+                    styles.input,
+                    focusedInput === 'phone' && styles.focusedInput
+                  ]}
                   value={values.phone}
                   onChangeText={(text) => setFieldValue('phone', text)}
+                  onBlur={() => setFocusedInput(null)}
+                  onFocus={() => setFocusedInput('phone')}
                 />
                 {touched.phone && errors.phone && (
                   <Text style={styles.error}>{errors.phone}</Text>
@@ -157,6 +184,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    marginBottom: 24,
   },
   title: {
     fontSize: 30,
@@ -169,14 +197,18 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#363636',
     padding: 16,
     marginVertical: 8,
     borderRadius: 12,
     fontSize: 24,
     marginTop: 16,
     color: '#363636',
+    borderWidth: 3,
+  },
+  focusedInput: {
+    borderWidth: 3,
+    borderColor: '#f8b43a',
   },
   error: {
     color: 'red',
@@ -199,3 +231,9 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
 })
+
+HomeScreen.navigationOptions = {
+  title: 'Home',
+  headerShown: false,
+  orientation: ['portrait', 'landscape'],
+};
